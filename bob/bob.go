@@ -21,7 +21,7 @@ func Hey(remark string) string {
 
 	switch {
 	case isEmpty:
-		return "ZZZZZFine. Be that way!"
+		return "Fine. Be that way!"
 	case isQuestion && isYell:
 		return "Calm down, I know what I'm doing!"
 	case isQuestion:
