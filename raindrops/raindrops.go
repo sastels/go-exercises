@@ -1,8 +1,6 @@
 package raindrops
 
-import (
-	"fmt"
-)
+import "strconv"
 
 // Convert makes rain sounds
 func Convert(n int) string {
@@ -17,7 +15,7 @@ func Convert(n int) string {
 		rainNoise += "Plong"
 	}
 	if rainNoise == "" {
-		rainNoise = fmt.Sprint(n)
+		rainNoise = strconv.Itoa(n)
 	}
 	return rainNoise
 }
