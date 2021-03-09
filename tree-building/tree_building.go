@@ -2,6 +2,7 @@ package tree
 
 import (
 	"errors"
+	"sort"
 )
 
 // Record stores the ids of the tree nodes
@@ -48,7 +49,11 @@ func Build(input []Record) (*Node, error) {
 			}
 			root = &nodes[ID]
 		} else {
-			nodes[parent].Children = append(nodes[parent].Children, &(nodes[ID]))
+			children := append(nodes[parent].Children, &(nodes[ID]))
+			sort.SliceStable(children, func(i, j int) bool {
+				return children[i].ID < children[j].ID
+			})
+			nodes[parent].Children = children
 		}
 	}
 	if root == nil {
