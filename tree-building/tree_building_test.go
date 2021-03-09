@@ -230,7 +230,10 @@ func TestMakeTreeSuccess(t *testing.T) {
 					tt.name, err)
 			}
 			if !reflect.DeepEqual(actual, tt.expected) {
-				t.Fatalf("Build for test case %q returned %s but was expected to return %s.",
+				fmt.Printf("actual type %T  expected %T\n", actual, tt.expected)
+				fmt.Printf("ids  %d   %d\n", actual.ID, tt.expected.ID)
+				fmt.Printf("children  %s   %s\n", actual.Children, tt.expected.Children)
+				t.Fatalf("Build for test case %q returned <%s> but was expected to return <%s>.",
 					tt.name, actual, tt.expected)
 			}
 		})
