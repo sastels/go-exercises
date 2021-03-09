@@ -2,7 +2,6 @@ package tree
 
 import (
 	"errors"
-	"fmt"
 )
 
 // Record stores the ids of the tree nodes
@@ -29,22 +28,32 @@ func Build(input []Record) (*Node, error) {
 		nodes[i] = Node{ID: i}
 	}
 
+	IDsSeen := map[int]bool{}
 	for _, record := range input {
-		if record.ID < 0 || record.ID >= len(input) || record.Parent < 0 || record.Parent >= len(input) {
+		ID := record.ID
+		parent := record.Parent
+		if IDsSeen[ID] {
+			return nil, errors.New("Duplicate ID")
+		}
+		if ID < 0 || ID >= len(input) || parent < 0 || parent >= len(input) {
 			return nil, errors.New("Bad ID")
 		}
-
-		fmt.Printf("id %d, parent %d\n", record.ID, record.Parent)
-		if record.ID == record.Parent {
-			root = &nodes[record.ID]
+		if parent > ID {
+			return nil, errors.New("Bad parent")
+		}
+		IDsSeen[ID] = true
+		if ID == parent {
+			if root != nil {
+				return nil, errors.New("duplicate root")
+			}
+			root = &nodes[ID]
 		} else {
-			thisNode := &(nodes[record.ID])
-			nodes[record.Parent].Children = append(nodes[record.Parent].Children, thisNode)
+			nodes[parent].Children = append(nodes[parent].Children, &(nodes[ID]))
 		}
 	}
-
 	if root == nil {
 		return nil, errors.New("no root")
 	}
+
 	return root, nil
 }
