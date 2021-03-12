@@ -133,7 +133,7 @@ func TestCallCloseOnNonFrobError(t *testing.T) {
 		t.Fatalf("Unexpected lack of error from Use")
 	}
 	if err.Error() != "meh" {
-		t.Fatalf("Invalid error returned from Use")
+		t.Fatalf("Invalid error returned from Use was <%s> wanted <meh>", err.Error())
 	}
 	if defrobCalled {
 		t.Fatalf("Defrob was called")

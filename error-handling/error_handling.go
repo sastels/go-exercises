@@ -2,27 +2,32 @@ package erratum
 
 // Use a resource
 func Use(o ResourceOpener, input string) (result error) {
-
 	var resource Resource
+	var err error
 
 	defer func() {
 		if r := recover(); r != nil {
-			err, frobError := r.(FrobError)
-			if frobError {
-				resource.Defrob(err.defrobTag)
-				resource.Close()
+			frobError, isFrobError := r.(FrobError)
+			if isFrobError {
+				resource.Defrob(frobError.defrobTag)
 			}
-			result = err
+			resource.Close()
+			result = r.(error)
 		}
 	}()
 
-	resource, err := o()
-
-	if err != nil {
-		return err
+	for {
+		resource, err = o()
+		if err != nil {
+			_, isTransientError := err.(TransientError)
+			if !isTransientError {
+				return err
+			}
+		} else {
+			break
+		}
 	}
 	resource.Frob(input)
 	resource.Close()
-
 	return nil
 }
