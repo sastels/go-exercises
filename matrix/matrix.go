@@ -8,7 +8,8 @@ type Matrix struct {
 
 // New returns a new matrix
 func New(input string) (*Matrix, error) {
-	return nil, nil
+	var matrix Matrix
+	return &matrix, nil
 }
 
 // Set sets part of the matrix
