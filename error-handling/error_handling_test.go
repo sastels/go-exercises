@@ -107,7 +107,7 @@ func TestCallDefrobAndCloseOnFrobError(t *testing.T) {
 		t.Fatalf("Unexpected lack of error from Use")
 	}
 	if err.Error() != "meh" {
-		t.Fatalf("Invalid error returned from Use")
+		t.Fatalf("Invalid error returned from Use <%s> wanted <meh>", err.Error())
 	}
 	if defrobTag != tag {
 		t.Fatalf("Wrong string passed to Defrob: got %v, expected %v", defrobTag, tag)
