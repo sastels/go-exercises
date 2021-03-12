@@ -25,7 +25,6 @@ func New(hour, min int) Clock {
 // Add adds minutes to a clock
 func (c Clock) Add(min int) Clock {
 	return New(c.hour, c.min+min)
-
 }
 
 // Subtract subtracts minutes from a clock
