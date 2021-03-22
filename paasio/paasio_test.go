@@ -55,16 +55,16 @@ func testWrite(t *testing.T, writer func(io.Writer) WriteCounter) {
 	}
 }
 
-func TestWriteWriter(t *testing.T) {
-	testWrite(t, NewWriteCounter)
-}
+// func TestWriteWriter(t *testing.T) {
+// 	testWrite(t, NewWriteCounter)
+// }
 
-func TestWriteReadWriter(t *testing.T) {
-	testWrite(t, func(w io.Writer) WriteCounter {
-		var r nopReader
-		return NewReadWriteCounter(readWriter{r, w})
-	})
-}
+// func TestWriteReadWriter(t *testing.T) {
+// 	testWrite(t, func(w io.Writer) WriteCounter {
+// 		var r nopReader
+// 		return NewReadWriteCounter(readWriter{r, w})
+// 	})
+// }
 
 // this test could be improved to test exact number of operations as well as
 // ensure that error conditions are preserved.
@@ -101,12 +101,12 @@ func TestReadReader(t *testing.T) {
 	testRead(t, NewReadCounter)
 }
 
-func TestReadReadWriter(t *testing.T) {
-	testRead(t, func(r io.Reader) ReadCounter {
-		var w nopWriter
-		return NewReadWriteCounter(readWriter{r, w})
-	})
-}
+// func TestReadReadWriter(t *testing.T) {
+// 	testRead(t, func(r io.Reader) ReadCounter {
+// 		var w nopWriter
+// 		return NewReadWriteCounter(readWriter{r, w})
+// 	})
+// }
 
 func testReadTotal(t *testing.T, rc ReadCounter) {
 	numGo := 8000
@@ -142,10 +142,10 @@ func TestReadTotalReader(t *testing.T) {
 	testReadTotal(t, NewReadCounter(r))
 }
 
-func TestReadTotalReadWriter(t *testing.T) {
-	var rw nopReadWriter
-	testReadTotal(t, NewReadWriteCounter(rw))
-}
+// func TestReadTotalReadWriter(t *testing.T) {
+// 	var rw nopReadWriter
+// 	testReadTotal(t, NewReadWriteCounter(rw))
+// }
 
 func testWriteTotal(t *testing.T, wt WriteCounter) {
 	numGo := 8000
@@ -176,25 +176,25 @@ func testWriteTotal(t *testing.T, wt WriteCounter) {
 	}
 }
 
-func TestWriteTotalWriter(t *testing.T) {
-	var w nopWriter
-	testWriteTotal(t, NewWriteCounter(w))
-}
+// func TestWriteTotalWriter(t *testing.T) {
+// 	var w nopWriter
+// 	testWriteTotal(t, NewWriteCounter(w))
+// }
 
-func TestWriteTotalReadWriter(t *testing.T) {
-	var rw nopReadWriter
-	testWriteTotal(t, NewReadWriteCounter(rw))
-}
+// func TestWriteTotalReadWriter(t *testing.T) {
+// 	var rw nopReadWriter
+// 	testWriteTotal(t, NewReadWriteCounter(rw))
+// }
 
 func TestReadCountConsistencyReader(t *testing.T) {
 	var r nopReader
 	testReadCountConsistency(t, NewReadCounter(r))
 }
 
-func TestReadCountConsistencyReadWriter(t *testing.T) {
-	var rw nopReadWriter
-	testReadCountConsistency(t, NewReadWriteCounter(rw))
-}
+// func TestReadCountConsistencyReadWriter(t *testing.T) {
+// 	var rw nopReadWriter
+// 	testReadCountConsistency(t, NewReadWriteCounter(rw))
+// }
 
 func testReadCountConsistency(t *testing.T, rc ReadCounter) {
 	const numGo = 4000
@@ -224,15 +224,15 @@ func testReadCountConsistency(t *testing.T, rc ReadCounter) {
 	wg.Wait()
 }
 
-func TestWriteCountConsistencyWriter(t *testing.T) {
-	var w nopWriter
-	testWriteCountConsistency(t, NewWriteCounter(w))
-}
+// func TestWriteCountConsistencyWriter(t *testing.T) {
+// 	var w nopWriter
+// 	testWriteCountConsistency(t, NewWriteCounter(w))
+// }
 
-func TestWriteCountConsistencyReadWriter(t *testing.T) {
-	var rw nopReadWriter
-	testWriteCountConsistency(t, NewReadWriteCounter(rw))
-}
+// func TestWriteCountConsistencyReadWriter(t *testing.T) {
+// 	var rw nopReadWriter
+// 	testWriteCountConsistency(t, NewReadWriteCounter(rw))
+// }
 
 func testWriteCountConsistency(t *testing.T, wc WriteCounter) {
 	const numGo = 4000
