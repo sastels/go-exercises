@@ -13,15 +13,19 @@ type PaasReader struct {
 }
 
 func (a PaasReader) ReadCount() (int64, int) {
+	a.mutex.Lock()
+	defer a.mutex.Unlock()
+
 	return *a.n, *a.nops
 }
 
 func (a PaasReader) Read(p []byte) (int, error) {
 	a.mutex.Lock()
+	defer a.mutex.Unlock()
+
 	n, err := a.reader.Read(p)
 	*a.n += int64(n)
 	*a.nops++
-	a.mutex.Unlock()
 	return n, err
 }
 
